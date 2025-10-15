@@ -6,7 +6,7 @@ import os
 from vectors import EmbeddingsManager
 from chatbot import ChatbotManager
 from helpdesk_analytics import HelpdeskAnalytics
-from network import NetworkAnalytics
+
 
 # Function to display PDFs
 def displayPDF(file):
@@ -42,8 +42,7 @@ if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 if 'analytics' not in st.session_state:
     st.session_state['analytics'] = None
-if 'network_analytics' not in st.session_state:
-    st.session_state['network_analytics'] = None
+
 
 # Sidebar
 
@@ -113,10 +112,7 @@ elif choice == "🤖 Chatbot":
                     # Initialize HelpdeskAnalytics if it's a CSV file
                     if st.session_state['file_type'] == "text/csv" and st.session_state['analytics'] is None:
                         st.session_state['analytics'] = HelpdeskAnalytics(st.session_state['temp_file_path'])
-                        
-                    # Initialize NetworkAnalytics if it's a CSV file
-                    if st.session_state['file_type'] == "text/csv" and st.session_state['network_analytics'] is None:
-                        st.session_state['network_analytics'] = NetworkAnalytics(st.session_state['temp_file_path'])
+                    
 
                 except Exception as e:
                     st.error(f"An error occurred: {e}")
@@ -144,6 +140,8 @@ elif choice == "🤖 Chatbot":
 
                 st.chat_message("assistant").markdown(answer)
                 st.session_state['messages'].append({"role": "assistant", "content": answer})
+
+        # Ticket draft flow removed as requested
 
 # Helpdesk Analytics Page
 elif choice == "📊 Helpdesk Analytics":
